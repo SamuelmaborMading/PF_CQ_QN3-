@@ -1,40 +1,43 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<CodeBlocks_project_file>
-	<FileVersion major="1" minor="6" />
-	<Project>
-		<Option title="reduce" />
-		<Option pch_mode="2" />
-		<Option compiler="gcc" />
-		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/reduce" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
-			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/reduce" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
-			</Target>
-		</Build>
-		<Compiler>
-			<Add option="-Wall" />
-			<Add option="-fexceptions" />
-		</Compiler>
-		<Unit filename="main.cpp" />
-		<Extensions>
-			<lib_finder disable_auto="1" />
-		</Extensions>
-	</Project>
-</CodeBlocks_project_file>
+#include <iostream>
+using namespace std;
+
+// Function to calculate the Greatest Common Divisor (GCD)
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+// Function to reduce the fraction
+int reduce(int &num, int &denom) {
+    // Check if either number is zero or negative
+    if (num <= 0 || denom <= 0) {
+        return 0; // Return 0 to indicate failure to reduce
+    }
+
+    int divisor = gcd(num, denom);
+
+    // Divide both numerator and denominator by their GCD to reduce the fraction
+    num /= divisor;
+    denom /= divisor;
+
+    return 1; // Return 1 to indicate success
+}
+
+int main() {
+    int numerator = 8;
+    int denominator = 12;
+
+    // Call the reduce function
+    if (reduce(numerator, denominator)) {
+        cout << "The reduced fraction is: " << numerator << "/" << denominator << endl;
+    } else {
+        cout << "Invalid input. Numerator and denominator must be positive integers." << endl;
+    }
+
+    return 0;
+}
+
